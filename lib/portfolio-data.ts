@@ -41,7 +41,7 @@ export const portfolios: Portfolio[] = [
     id: "javier-guerra",
     name: "Javier Guerra",
     title: "Full Stack Developer",
-    bio: "Desarrollador apasionado por crear soluciones innovadoras",
+    bio: "Desarrollador apasionado por crear soluciones innovadoras y en conquistar lobas",
     avatar: "/javier-portafolio.jpg",
     carouselImages: [
       {
@@ -109,7 +109,7 @@ export const portfolios: Portfolio[] = [
   {
     id: "victor-madrid",
     name: "Victor Madrid",
-    title: "UI/UX Designer & Frontend Developer",
+    title: "Frontend Developer",
     bio: "Diseñador y desarrollador enfocado en experiencias de usuario excepcionales",
     avatar: "/victor-portafolio.png",
     carouselImages: [
@@ -248,7 +248,7 @@ export const portfolios: Portfolio[] = [
   {
     id: "susan-ixcamparij",
     name: "Susan Ixcamparij",
-    title: "Mobile Developer & Tech Lead",
+    title: "Mobile Developer",
     bio: "Líder técnica especializada en desarrollo móvil multiplataforma",
     avatar: "/susan-portafolio.png",
     carouselImages: [

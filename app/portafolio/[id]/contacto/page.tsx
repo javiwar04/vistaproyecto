@@ -35,46 +35,40 @@ export default function ContactoPage({ params }: { params: { id: string } }) {
     }
   }, [params.id, router])
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // 🔹 Nueva función adaptada a Formspree
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitStatus({ type: null, message: "" })
 
     try {
-      const response = await fetch("/api/send-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-          recipientEmail: portfolio?.contact.email,
-          recipientName: portfolio?.name,
-        }),
-      })
+      const form = e.currentTarget
+      const formData = new FormData(form)
 
-      const data = await response.json()
+      const response = await fetch("https://formspree.io/f/xdkwbvpq", {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/json" },
+      })
 
       if (response.ok) {
         setSubmitStatus({
           type: "success",
-          message: "¡Mensaje enviado exitosamente! Te responderé pronto.",
+          message: "✅ ¡Mensaje enviado con éxito! Te responderé pronto.",
         })
         setFormData({ name: "", email: "", subject: "", message: "" })
+        form.reset()
       } else {
         setSubmitStatus({
           type: "error",
-          message: data.error || "Hubo un error al enviar el mensaje. Por favor intenta de nuevo.",
+          message: "❌ Ocurrió un error al enviar el mensaje. Intenta nuevamente.",
         })
       }
     } catch (error) {
-      console.error("[v0] Error sending email:", error)
+      console.error("Error al enviar:", error)
       setSubmitStatus({
         type: "error",
-        message: "Error de conexión. Por favor verifica tu internet e intenta de nuevo.",
+        message: "⚠️ Error de conexión. Verifica tu internet e intenta de nuevo.",
       })
     } finally {
       setIsSubmitting(false)
@@ -88,16 +82,16 @@ export default function ContactoPage({ params }: { params: { id: string } }) {
     })
   }
 
-  if (!portfolio) {
-    return null
-  }
+  if (!portfolio) return null
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-blue-950 dark:to-purple-950 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4 text-balance">Contacto</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4 text-balance">
+            Contacto
+          </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 text-pretty">
             ¿Tienes un proyecto en mente? ¡Hablemos y hagámoslo realidad!
           </p>
@@ -139,7 +133,12 @@ export default function ContactoPage({ params }: { params: { id: string } }) {
                 </Alert>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form
+                onSubmit={handleSubmit}
+                action="https://formspree.io/f/xdkwbvpq"
+                method="POST"
+                className="space-y-6"
+              >
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-900 dark:text-white mb-2">
                     Nombre Completo
@@ -207,6 +206,9 @@ export default function ContactoPage({ params }: { params: { id: string } }) {
                     disabled={isSubmitting}
                   />
                 </div>
+
+                {/* Campo oculto opcional: cambia el asunto del correo que recibirás */}
+                <input type="hidden" name="_subject" value="Nuevo mensaje desde el portafolio" />
 
                 <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
                   <Mail className="mr-2 h-5 w-5" />

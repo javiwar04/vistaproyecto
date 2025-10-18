@@ -19,14 +19,13 @@ export function Footer() {
               </div>
               <div>
                 <h3 className="font-bold text-lg bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
-                  Mi Portafolio
+                  Proyecto Final
                 </h3>
-                <p className="text-sm text-muted-foreground">Desarrollador Full Stack</p>
+                <p className="text-sm text-muted-foreground">Desarrollo Web</p>
               </div>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-md">
-              Creando experiencias digitales excepcionales con código limpio y diseño intuitivo. Especializado en
-              desarrollo web moderno y soluciones innovadoras.
+              Portafolio elaborado por futuros desarrolladores Full Stack
             </p>
           </div>
 
